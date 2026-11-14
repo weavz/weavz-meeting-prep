@@ -1,4 +1,23 @@
-# Meeting Preparation
+# Google Calendar and Gmail MCP agent with PydanticAI: Meeting Preparation
+
+<!-- weavz:discovery:start -->
+
+Use Google Calendar and Gmail with PydanticAI through Weavz MCP. This meeting preparation example returns a report from bounded app reads with source references.
+
+**Framework:** PydanticAI · **Language:** Python · **MCP modes:** Tool Mode and Code Mode
+
+Use another framework:
+
+- [Google Calendar MCP with Google ADK Python](https://github.com/weavz/weavz-google-adk-python/blob/main/docs/app-recipes.md#google-calendar-mcp-with-google-adk-python)
+- [Google Calendar MCP with CrewAI Python](https://github.com/weavz/weavz-crewai/blob/main/docs/app-recipes.md#google-calendar-mcp-with-crewai-python)
+- [Google Calendar MCP with Strands Agents Python](https://github.com/weavz/weavz-strands/blob/main/docs/app-recipes.md#google-calendar-mcp-with-strands-agents-python)
+- [Gmail MCP with OpenAI Agents SDK Python](https://github.com/weavz/weavz-openai-agents-python/blob/main/docs/app-recipes.md#gmail-mcp-with-openai-agents-sdk-python)
+- [Gmail MCP with PydanticAI Python](https://github.com/weavz/weavz-pydantic-ai/blob/main/docs/app-recipes.md#gmail-mcp-with-pydanticai-python)
+- [Gmail MCP with Google ADK Python](https://github.com/weavz/weavz-google-adk-python/blob/main/docs/app-recipes.md#gmail-mcp-with-google-adk-python)
+
+[MCP app and framework directory](https://github.com/weavz/mcp-examples/blob/main/docs/integrations.md) · [All examples](https://github.com/weavz/mcp-examples) · [Weavz MCP guide](https://weavz.io/docs/guides/agent-framework-examples)
+
+<!-- weavz:discovery:end -->
 
 Prepare a concise briefing for the selected project meeting using the event details and matching recent emails. Surface decisions, open questions, and the latest confirmed context.
 
