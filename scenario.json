@@ -1,0 +1,140 @@
+{
+  "id": "meeting-prep",
+  "title": "Meeting Preparation",
+  "prompt": "Prepare a concise briefing for the selected project meeting using the event details and matching recent emails. Surface decisions, open questions, and the latest confirmed context.",
+  "instructions": "Read only the selected event and the requested project email sample. Use get_event for the exact event and get_message for every message returned by list_messages. Keep the review to this meeting and its stated search window. Cite agenda and email records separately, flag conflicts rather than resolving them, and do not send messages, invite attendees, or alter the event.",
+  "fixture_summary": "Synthetic Project Aurora meeting is preceded by two recent project emails: one confirms a rollout decision and one lists a question to resolve.",
+  "inputs": {
+    "calendarId": "primary",
+    "eventId": "event-aurora-44",
+    "query": "after:2026/11/12 before:2026/11/15 Aurora",
+    "maxResults": 2
+  },
+  "steps": [
+    {
+      "id": "find_meeting",
+      "alias": "calendar",
+      "integration": "google-calendar",
+      "action": "list_events",
+      "tool": "calendar__list_events",
+      "arguments": {
+        "calendarId": "primary",
+        "timeMin": "2026-11-17T00:00:00Z",
+        "timeMax": "2026-11-18T00:00:00Z",
+        "query": "Aurora",
+        "maxResults": 5,
+        "singleEvents": true,
+        "orderBy": "startTime"
+      },
+      "records": [
+        {
+          "id": "event-aurora-44",
+          "app": "Google Calendar",
+          "title": "Project Aurora launch checkpoint",
+          "detail": "Synthetic event on 2026-11-17 at 13:00 UTC; agenda: confirm rollout readiness and owners.",
+          "url": "https://example.com/records/event-aurora-44",
+          "event_id": "event-aurora-44",
+          "project": "Aurora",
+          "start_at": "2026-11-17T13:00:00Z",
+          "agenda": "rollout readiness and owners",
+          "decision_confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "read_meeting_details",
+      "alias": "calendar",
+      "integration": "google-calendar",
+      "action": "get_event",
+      "tool": "calendar__get_event",
+      "arguments": {
+        "calendarId": "primary",
+        "eventId": "event-aurora-44"
+      },
+      "records": [
+        {
+          "id": "event-aurora-44",
+          "app": "Google Calendar",
+          "title": "Project Aurora launch checkpoint",
+          "detail": "Full synthetic event details: 30-minute checkpoint. Decision requested: approve the staged rollout checklist. No attendee responses are included.",
+          "url": "https://example.com/records/event-aurora-44",
+          "event_id": "event-aurora-44",
+          "project": "Aurora",
+          "start_at": "2026-11-17T13:00:00Z",
+          "agenda": "approve staged rollout checklist",
+          "decision_confirmed": false
+        }
+      ]
+    },
+    {
+      "id": "search_aurora_mail",
+      "alias": "inbox",
+      "integration": "gmail",
+      "action": "list_messages",
+      "tool": "inbox__list_messages",
+      "arguments": {
+        "query": "after:2026/11/12 before:2026/11/15 Aurora",
+        "maxResults": 2
+      },
+      "records": [
+        {
+          "id": "gmail-aurora-1",
+          "app": "Gmail",
+          "title": "Rollout checklist updated",
+          "detail": "Summary: Engineering confirms the checklist and asks whether the first region launches Tuesday or Wednesday.",
+          "url": "https://example.com/records/gmail-aurora-1",
+          "message_id": "gmail-aurora-1",
+          "project": "Aurora",
+          "mail_kind": "decision_context",
+          "received_at": "2026-11-13T16:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "read_checklist_email",
+      "alias": "inbox",
+      "integration": "gmail",
+      "action": "get_message",
+      "tool": "inbox__get_message",
+      "arguments": {
+        "messageId": "gmail-aurora-1",
+        "format": "full"
+      },
+      "records": [
+        {
+          "id": "gmail-aurora-1",
+          "app": "Gmail",
+          "title": "Rollout checklist updated",
+          "detail": "Full synthetic body: The rollback owner is assigned to the incident lead and the staged checklist is ready for review. Operations still needs a Tuesday-or-Wednesday decision for the first region. No rollout approval was sent.",
+          "url": "https://example.com/records/gmail-aurora-1",
+          "message_id": "gmail-aurora-1",
+          "project": "Aurora",
+          "mail_kind": "decision_context",
+          "received_at": "2026-11-13T16:00:00Z",
+          "confirmed_context": true,
+          "open_question": true
+        }
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "name": "confirmed_context_sources",
+      "op": "count",
+      "where": {
+        "confirmed_context": true
+      }
+    },
+    {
+      "name": "open_questions_to_resolve",
+      "op": "count",
+      "where": {
+        "open_question": true
+      }
+    }
+  ],
+  "expected_metrics": {
+    "confirmed_context_sources": 1,
+    "open_questions_to_resolve": 1
+  }
+}
